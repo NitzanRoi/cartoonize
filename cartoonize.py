@@ -45,16 +45,16 @@ class BasicOperations:
         height=500
         width=300
         # url='https://picsum.photos/'+str(height)+'/'+str(width)+'.jpg'
-        url = 'https://source.unsplash.com/'+str(width)+'x'+str(height)+'/?face'
+        url = 'https://source.unsplash.com/'+str(width)+'x'+str(height)+'/?camel'
         response = requests.get(url)
         img = Image.open(BytesIO(response.content))
         return np.array(img).astype('float64')
 
     def save_img(self, img, path):
         if (len(img.shape) == 2):
-            img = convert_img_colors('RGB', img)
+            img = self.convert_img_colors('RGB', img)
         if (np.max(img) > 1.0):
-            img = normalize_img(img)
+            img = self.normalize_img(img)
         image.imsave(path + ".jpg", img)
         print('image saved')
 
@@ -151,13 +151,18 @@ class Test:
         img = self.im_obj.cartoonize()
         return img
 
+    def test_save_img(self, img, name):
+        self.bo_obj.save_img(img, name)
+
 def main():
     test = Test()
     img = test.test_get_img()
     test.test_show_img(img)
+    test.test_save_img(img, 'original')
     print('--')
     img = test.test_manipulations(img)
     test.test_show_img(img)
+    test.test_save_img(img, 'cartoon')
 
 if __name__ == "__main__":
     main()
