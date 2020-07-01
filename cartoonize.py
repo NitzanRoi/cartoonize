@@ -126,7 +126,7 @@ class ImageManipulations:
 
     def bilateral_filter(self, img):
         img = img.astype('uint8')
-        return cv2.bilateralFilter(img, 5, 30, 30)
+        return cv2.bilateralFilter(img, 5, 70, 70)
 
     def cartoonize(self):
         img = self.k_means() # quantize
